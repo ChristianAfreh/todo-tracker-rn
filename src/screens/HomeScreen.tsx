@@ -31,12 +31,19 @@ export default function HomeScreen() {
     }, [todos, loading]);
 
 
-    const handleToggle = () => {
+    const handleToggle = (id:string) => {
         // Implement toggle logic here
+        setTodos((prev) =>
+            prev.map((todo) =>
+                todo.id === id ? { ...todo, completed: !todo.completed } : todo
+            )
+        );
+
     }
 
-    const handleDelete = () => {
+    const handleDelete = (id:string) => {
         // Implement delete logic here
+        setTodos((prev) => prev.filter((todo) => todo.id !== id));
     }
 
     const handleAdd = (title:string) => {
@@ -86,8 +93,6 @@ export default function HomeScreen() {
                 onClose={() => setModalVisible(false)}
                 onAdd={handleAdd}
             />
-
-
         </SafeAreaView>
     );
 }

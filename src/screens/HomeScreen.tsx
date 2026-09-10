@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Todo } from "../types/todo";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TodoItem from "../components/TodoItem";
 import AddTodoModal from "../components/AddTodoModal";
@@ -31,7 +31,7 @@ export default function HomeScreen() {
     }, [todos, loading]);
 
 
-    const handleToggle = (id:string) => {
+    const handleToggle = (id: string) => {
         // Implement toggle logic here
         setTodos((prev) =>
             prev.map((todo) =>
@@ -41,12 +41,25 @@ export default function HomeScreen() {
 
     }
 
-    const handleDelete = (id:string) => {
-        // Implement delete logic here
-        setTodos((prev) => prev.filter((todo) => todo.id !== id));
-    }
+    const handleDelete = (id: string) => {
+  const todo = todos.find((t) => t.id === id);
+  Alert.alert(
+    "Delete task?",
+    todo ? `"${todo.title}" will be removed.` : "This task will be removed.",
+    [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => {
+          setTodos((prev) => prev.filter((t) => t.id !== id));
+        },
+      },
+    ]
+  );
+};
 
-    const handleAdd = (title:string) => {
+    const handleAdd = (title: string) => {
         // Implement add logic here
         const newTodo: Todo = {
             id: Date.now().toString(),
@@ -64,9 +77,13 @@ export default function HomeScreen() {
             <View className="flex-1 px-4 pt-4">
                 <Text className="text-2xl font-bold text-gray-900 mb-4">My Tasks</Text>
                 {todos.length === 0 ? (
-                    <View className="flex-1 items-center justify-center">
-                        <Text className="text-gray-400 text-base">
-                            No tasks yet. Tap + to add one.
+                    <View className="flex-1 items-center justify-center px-8">
+                        <Text className="text-6xl mb-4">📝</Text>
+                        <Text className="text-gray-900 text-lg font-semibold mb-1">
+                            No tasks yet
+                        </Text>
+                        <Text className="text-gray-400 text-base text-center">
+                            Tap the + button below to add your first task
                         </Text>
                     </View>
                 ) : (

@@ -1,11 +1,93 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Todo } from "../types/todo";
+import { View, Text, FlatList, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import TodoItem from "../components/TodoItem";
+import AddTodoModal from "../components/AddTodoModal";
+import { loadTodos, saveTodos } from "../storage/todoStorage";
 
 
 
-export default function HomeScreen(){
+export default function HomeScreen() {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(true);
-    
+
+
+    // Load todos once, when the screen first mounts
+    useEffect(() => {
+        (async () => {
+            const stored = await loadTodos();
+            setTodos(stored);
+            setLoading(false);
+        })();
+    }, []);
+
+    // Save todos every time the list changes (but skip the very first render)
+    useEffect(() => {
+        if (!loading) {
+            saveTodos(todos);
+        }
+    }, [todos, loading]);
+
+
+    const handleToggle = () => {
+        // Implement toggle logic here
+    }
+
+    const handleDelete = () => {
+        // Implement delete logic here
+    }
+
+    const handleAdd = (title:string) => {
+        // Implement add logic here
+        const newTodo: Todo = {
+            id: Date.now().toString(),
+            title,
+            completed: false,
+            createdAt: Date.now(),
+        };
+        setTodos((prev) => [newTodo, ...prev]);
+
+    }
+
+
+    return (
+        <SafeAreaView className="flex-1 bg-white">
+            <View className="flex-1 px-4 pt-4">
+                <Text className="text-2xl font-bold text-gray-900 mb-4">My Tasks</Text>
+                {todos.length === 0 ? (
+                    <View className="flex-1 items-center justify-center">
+                        <Text className="text-gray-400 text-base">
+                            No tasks yet. Tap + to add one.
+                        </Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={todos}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => (
+                            <TodoItem
+                                todo={item}
+                                onToggle={handleToggle}
+                                onDelete={handleDelete}
+                            />
+                        )}
+                    />
+                )}
+            </View>
+
+            <Pressable onPress={() => setModalVisible(true)} className="absolute bottom-8 right-6 bg-indigo-500 w-14 h-14 rounded-full items-center justify-center shadow-lg"   >
+                <Text className="text-white text-3xl leading-none">+</Text>
+            </Pressable>
+
+            <AddTodoModal
+                visible={modalVisible}
+                onClose={() => setModalVisible(false)}
+                onAdd={handleAdd}
+            />
+
+
+        </SafeAreaView>
+    );
 }

@@ -108,7 +108,7 @@ export default function HomeScreen() {
             </View>
 
             <Pressable onPress={() => setModalVisible(true)} className="absolute bottom-8 right-6 bg-indigo-500 w-14 h-14 rounded-full items-center justify-center shadow-lg"   >
-                <Text className="text-white text-3xl leading-none">+</Text>
+                <Ionicons name="add" size={32} color="white" />
             </Pressable>
 
             <AddTodoModal

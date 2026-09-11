@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Settings() {
   return (
@@ -8,7 +9,7 @@ export default function Settings() {
       <View className="px-4 pt-4">
         <View className="flex-row items-center mb-6">
           <Pressable onPress={() => router.back()} className="mr-4">
-            <Text className="text-indigo-500 text-base">← Back</Text>
+            <Ionicons name="arrow-back" size={24} color="#4F46E5" />
           </Pressable>
           <Text className="text-2xl font-bold text-gray-900">Settings</Text>
         </View>

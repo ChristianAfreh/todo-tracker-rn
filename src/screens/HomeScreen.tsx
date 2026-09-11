@@ -84,7 +84,7 @@ export default function HomeScreen() {
                 </View>
                 {todos.length === 0 ? (
                     <View className="flex-1 items-center justify-center px-8">
-                        <Text className="text-6xl mb-4">📝</Text>
+                        <Ionicons name="list-outline" size={48} color="#9CA3AF" className="mb-4" />
                         <Text className="text-gray-900 text-lg font-semibold mb-1">
                             No tasks yet
                         </Text>

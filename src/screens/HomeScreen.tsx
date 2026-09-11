@@ -7,12 +7,15 @@ import AddTodoModal from "../components/AddTodoModal";
 import { loadTodos, saveTodos } from "../storage/todoStorage";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
 
 
 export default function HomeScreen() {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(true);
+    const { colorScheme, toggleColorScheme } = useColorScheme();
+    const isDark = colorScheme === "dark";
 
 
     // Load todos once, when the screen first mounts
@@ -74,21 +77,21 @@ export default function HomeScreen() {
 
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView className="flex-1 bg-white dark:bg-gray-900">
             <View className="flex-1 px-4 pt-4">
                 <View className="flex-row items-center justify-between mb-4">
-                    <Text className="text-2xl font-bold text-gray-900">My Tasks</Text>
+                    <Text className="text-2xl font-bold text-gray-900 dark:text-white">My Tasks</Text>
                     <Pressable onPress={() => router.push("/settings")}>
-                        <Ionicons name="settings-outline" size={24} color="#374151" />
+                        <Ionicons name="settings-outline" size={24} color={isDark ? "#fffffc" : "#0a0a0a"}/>
                     </Pressable>
                 </View>
                 {todos.length === 0 ? (
                     <View className="flex-1 items-center justify-center px-8">
                         <Ionicons name="list-outline" size={48} color="#9CA3AF" className="mb-4" />
-                        <Text className="text-gray-900 text-lg font-semibold mb-1">
+                        <Text className="text-gray-900 text-lg font-semibold mb-1 dark:text-white">
                             No tasks yet
                         </Text>
-                        <Text className="text-gray-400 text-base text-center">
+                        <Text className="text-gray-400 text-base text-center dark:text-gray-500">
                             Tap the + button below to add your first task
                         </Text>
                     </View>

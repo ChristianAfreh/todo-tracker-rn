@@ -41,17 +41,18 @@ export default function AddTodoModal({ visible, onClose, onAdd }: AddTodoModalPr
       >
         <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.4)" }}>
           <View
-            className="bg-white rounded-t-2xl p-6"
+            className="bg-white dark:bg-gray-900 rounded-t-2xl p-6"
             style={{ paddingBottom: insets.bottom + 16 }}
           >
-            <Text className="text-lg font-bold mb-4 text-gray-900">New Task</Text>
+            <Text className="text-lg font-bold mb-4 text-gray-900 dark:text-white">New Task</Text>
 
             <TextInput
               value={title}
               onChangeText={setTitle}
               placeholder="What do you need to do?"
-              placeholderClassName="text-gray-400"
-              className="border border-gray-200 rounded-xl px-4 py-3 text-base mb-4"
+              placeholderClassName="text-gray-400 dark:text-gray-500"
+              className="border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 
+              text-base mb-4 text-gray-900 dark:text-white"
               autoFocus
               onSubmitEditing={handleAdd}
               returnKeyType="done"
@@ -59,7 +60,7 @@ export default function AddTodoModal({ visible, onClose, onAdd }: AddTodoModalPr
 
             <View className="flex-row justify-end">
               <Pressable onPress={handleClose} className="px-4 py-3 mr-2">
-                <Text className="text-gray-500 text-base">Cancel</Text>
+                <Text className="text-gray-500 dark:text-gray-400 text-base">Cancel</Text>
               </Pressable>
               <Pressable
                 onPress={handleAdd}

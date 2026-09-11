@@ -34,7 +34,7 @@ export default function AddTodoModal({ visible, onClose, onAdd }: AddTodoModalPr
   };
 
   return (
-    <Modal visible={visible} transparent animationType="slide" statusBarTranslucent={false} >
+    <Modal visible={visible} transparent animationType="slide" statusBarTranslucent >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
